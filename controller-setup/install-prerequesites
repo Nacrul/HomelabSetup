@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# install tools on openSUSE Tumbleweed
+if [ $(lsb_release -is) = openSUSE ]; then 
+    echo "Instalation of openSUSE Tumbleweed tools"
+    sudo zypper in terraform ansible go
+fi
+
+
+# install proxmox terraform controller
+GO111MODULE=on go get github.com/Telmate/terraform-provider-proxmox/cmd/terraform-provider-proxmox
+GO111MODULE=on go get github.com/Telmate/terraform-provider-proxmox/cmd/terraform-provisioner-proxmox
+
+sudo cp /home/"$USER"/go/bin/terraform-provider-proxmox ~/.terraform.d/plugins
+sudo cp /home/"$USER"/go/bin/terraform-provisioner-proxmox ~/.terraform.d/plugins
