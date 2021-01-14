@@ -1,7 +1,22 @@
 #!/bin/bash
 
-# install tools on openSUSE Tumbleweed
-if [ "$(lsb_release -is)" = openSUSE ]; then 
+LINUX_DISTRO="$(lsb_release -is)"
+
+
+case $LINUX_DISTRO in 
+  openSUSE)
+    # install tools on openSUSE Tumbleweed
     echo "Instalation of openSUSE Tumbleweed tools"
-    sudo zypper install terraform ansible go
-fi
+    sudo zypper install terraform ansible
+    ;;
+  Ubuntu)
+    # get the terraform repository setup
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+    sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+    # get the ansible repository setup
+    sudo apt install software-properties-common
+    sudo apt-add-repository --yes --update ppa:ansible/ansible
+    # install tools
+    sudo apt install terraform ansible
+    ;;
+esac
