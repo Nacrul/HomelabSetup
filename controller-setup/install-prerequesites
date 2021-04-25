@@ -8,6 +8,8 @@ case $LINUX_DISTRO in
     # install tools on openSUSE Tumbleweed
     echo "Instalation of openSUSE Tumbleweed tools"
     sudo zypper install terraform ansible
+    pip install --upgrade
+    pip install proxmoxer results ansible-vault
     ;;
   Ubuntu)
     # get the terraform repository setup
@@ -19,4 +21,3 @@ case $LINUX_DISTRO in
     # install tools
     sudo apt install terraform ansible
     ;;
-esac
